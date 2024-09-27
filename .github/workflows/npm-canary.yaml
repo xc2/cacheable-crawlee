@@ -1,0 +1,40 @@
+name: NPM Canary Publish
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version'
+        required: false
+        type: string
+      name:
+        description: 'Package name'
+        required: false
+        type: string
+        default: '@canary-109cafe/cacheable-request'
+
+jobs:
+  build:
+    uses: xc2/ghwf/.github/workflows/pnpm-artifact.yaml@main
+    with:
+      script: deploy
+      artifact-path: "*.tgz"
+      artifact-name: pkg
+
+  npm-publish:
+    runs-on: ubuntu-latest
+    environment: npm-canary
+    needs: build
+    permissions:
+      id-token: write
+    steps:
+      - uses: xc2/ghwf/pnpm-artifact/restore@main
+        with:
+          cache-key: ${{ needs.build.outputs.cache-key }}
+          cache-path: ${{ needs.build.outputs.cache-path }}
+      - uses: 109cafe/action-npr@main
+        with:
+          version: ${{ inputs.version }}
+          name: ${{ inputs.name }}
+          tarball: ${{ needs.build.outputs.cache-path }}
+          token: ${{ secrets.NPM_TOKEN }}
+          provenance: true

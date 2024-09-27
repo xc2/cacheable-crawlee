@@ -1,0 +1,42 @@
+name: Release
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    uses: xc2/ghwf/.github/workflows/pnpm-artifact.yaml@main
+    with:
+      script: deploy
+      artifact-path: "*.tgz"
+      artifact-name: pkg
+
+  update-release:
+    needs: build
+    uses: xc2/ghwf/.github/workflows/update-release.yaml@main
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+    with:
+      cache-key: ${{ needs.build.outputs.cache-key }}
+      cache-path: ${{ needs.build.outputs.cache-path }}
+
+  npm-publish:
+    runs-on: ubuntu-latest
+    environment: npm-stable
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      id-token: write
+    steps:
+      - uses: xc2/ghwf/pnpm-artifact/restore@main
+        with:
+          cache-key: ${{ needs.build.outputs.cache-key }}
+          cache-path: ${{ needs.build.outputs.cache-path }}
+      - uses: 109cafe/action-npr@main
+        with:
+          tarball: ${{ needs.build.outputs.cache-path }}
+          token: ${{ secrets.NPM_TOKEN }}
+          provenance: true

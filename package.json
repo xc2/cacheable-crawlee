@@ -1,0 +1,47 @@
+{
+  "name": "cacheable-crawlee",
+  "version": "0.0.0-PLACEHOLDER",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "files": ["dist", "*.md"],
+  "packageManager": "pnpm@9.11.0",
+  "scripts": {
+    "build": "rslib build",
+    "build:watch": "rslib build -w",
+    "prepack": "rslib build",
+    "deploy": "npm pack",
+    "prepare": "pnpm --package husky@9.1.1 dlx husky"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.2",
+    "@crawlee/http": "^3.11.4",
+    "@rslib/core": "0.0.8",
+    "@types/node": "^22.7.4",
+    "keyv": "^5.0.3",
+    "typescript": "^5.6.2"
+  },
+  "peerDependencies": {
+    "@crawlee/types": ">=3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@crawlee/types": {
+      "optional": true
+    }
+  },
+  "nano-staged": {
+    "*.{js,ts,cts,mts}": "biome check --write --diagnostic-level=error --no-errors-on-unmatched"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xc2/cacheable-crawlee"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/xc2/cacheable-crawlee",
+  "keywords": ["crawlee"],
+  "author": "kfll",
+  "description": "Add http cache support to @crawlee/http based crawler",
+  "dependencies": {
+    "tldts": "^6.1.48"
+  }
+}
