@@ -7,10 +7,11 @@ export default defineConfig({
     },
   },
   output: {
+    target: "node",
     sourceMap: {
       js: "source-map",
     },
-    minify: { js: true },
+    minify: { js: false },
     distPath: {
       root: "./dist",
     },
@@ -29,6 +30,12 @@ export default defineConfig({
     {
       format: "esm",
       dts: false,
+      autoExtension: false,
+      output: {
+        filename: {
+          js: "[name].mjs",
+        },
+      },
     },
   ],
 });
