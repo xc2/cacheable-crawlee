@@ -13,6 +13,18 @@ export class KeyvKeyValueStore extends EventEmitter implements KeyvStoreAdapter 
     super();
     this.opts = opts;
   }
+  static async generateKey(key: string): Promise<string> {
+    let _key = key.replace(/[^a-zA-Z0-9!\-_.'()]/g, "").slice(0, 255);
+    if (_key !== key) {
+      const { default: fnv1a } = await import("@sindresorhus/fnv1a");
+      const keyHash = fnv1a(_key, { size: 32 }).toString(16);
+      _key = `${_key.slice(0, 255 - keyHash.length)}.${keyHash}`;
+    }
+    return _key;
+  }
+  generateKey(key: string): Promise<string> {
+    return KeyvKeyValueStore.generateKey(key);
+  }
   protected getStore() {
     this._store = this._store || this.opts.getKeyValueStore();
     return this._store;
@@ -25,6 +37,7 @@ export class KeyvKeyValueStore extends EventEmitter implements KeyvStoreAdapter 
   }
 
   async delete(key: string): Promise<boolean> {
+    key = await this.generateKey(key);
     const store = await this.getStore();
     const r = await store.recordExists(key);
     if (!r) return false;
@@ -33,14 +46,20 @@ export class KeyvKeyValueStore extends EventEmitter implements KeyvStoreAdapter 
   }
 
   async get<Value>(key: string): Promise<StoredData<Value> | undefined> {
+    key = await this.generateKey(key);
     const store = await this.getStore();
     const value = await store.getValue<StoredData<Value>>(key);
     return value === null ? undefined : value;
   }
 
   async set(key: string, value: any, ttl?: number): Promise<any> {
+    key = await this.generateKey(key);
     const store = await this.getStore();
-    await store.setValue(key, value, {});
+    try {
+      await store.setValue(key, value, {});
+    } catch {
+      return false;
+    }
     return true;
   }
 }

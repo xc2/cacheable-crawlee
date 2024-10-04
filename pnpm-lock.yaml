@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@crawlee/types':
-        specifier: '>=3.0.0'
-        version: 3.11.4
+      '@sindresorhus/fnv1a':
+        specifier: ^3.1.0
+        version: 3.1.0
       tldts:
         specifier: ^6.1.48
         version: 6.1.48
@@ -259,6 +259,10 @@ packages:
 
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
+
+  '@sindresorhus/fnv1a@3.1.0':
+    resolution: {integrity: sha512-KV321z5m/0nuAg83W1dPLy85HpHDk7Sdi4fJbwvacWsEhAh+rZUW4ZfGcXmUIvjZg4ss2bcwNlRhJ7GBEUG08w==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   '@sindresorhus/is@4.6.0':
     resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
@@ -1046,6 +1050,8 @@ snapshots:
       lodash: 4.17.21
 
   '@sec-ant/readable-stream@0.4.1': {}
+
+  '@sindresorhus/fnv1a@3.1.0': {}
 
   '@sindresorhus/is@4.6.0': {}
 
