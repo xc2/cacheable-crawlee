@@ -31,7 +31,7 @@ jobs:
         with:
           cache-key: ${{ needs.build.outputs.cache-key }}
           cache-path: ${{ needs.build.outputs.cache-path }}
-      - uses: 109cafe/action-npr@fix-1005
+      - uses: 109cafe/action-npr@main
         with:
           version: ${{ inputs.version }}
           name: ${{ inputs.name }}
