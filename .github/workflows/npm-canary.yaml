@@ -10,7 +10,7 @@ on:
         description: 'Package name'
         required: false
         type: string
-        default: '@canary-109cafe/cacheable-request'
+        default: '@canary-109cafe/cacheable-crawlee'
 
 jobs:
   build:
@@ -31,7 +31,7 @@ jobs:
         with:
           cache-key: ${{ needs.build.outputs.cache-key }}
           cache-path: ${{ needs.build.outputs.cache-path }}
-      - uses: 109cafe/action-npr@main
+      - uses: 109cafe/action-npr@fix-1005
         with:
           version: ${{ inputs.version }}
           name: ${{ inputs.name }}
