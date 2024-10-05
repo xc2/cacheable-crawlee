@@ -10,7 +10,7 @@ on:
         description: 'Package name'
         required: false
         type: string
-        default: '@canary-109cafe/cacheable-request'
+        default: '@canary-109cafe/cacheable-crawlee'
 
 jobs:
   build:
