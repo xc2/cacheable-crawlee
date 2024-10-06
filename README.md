@@ -1,5 +1,7 @@
 # cacheable-crawlee
 
+[![npm version](https://badge.fury.io/js/cacheable-crawlee.svg)](https://npmjs.com/package/cacheable-crawlee)
+
 `cacheable-crawlee` is a Node.js package that provides caching capabilities for the [crawlee](https://crawlee.dev/)'s `HttpCrawler` based crawlers.  It allows you to cache HTTP responses to improve the efficiency and speed of your web crawling tasks.
 
 The cache policy follows [RFC 7234](https://tools.ietf.org/html/rfc7234) and [RFC 5861](https://tools.ietf.org/html/rfc5861) standards, and is implemented by [http-cache-semantics](https://www.npmjs.com/package/http-cache-semantics).

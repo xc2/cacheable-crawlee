@@ -19,7 +19,7 @@ export default defineConfig({
   lib: [
     {
       format: "cjs",
-      dts: { bundle: false },
+      dts: { bundle: true },
       autoExtension: false,
       output: {
         filename: {
