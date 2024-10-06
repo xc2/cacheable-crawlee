@@ -1,4 +1,4 @@
-import { HttpCrawler, HttpCrawlerOptions } from "@crawlee/http";
+import type { HttpCrawlerOptions, InternalHttpCrawlingContext } from "@crawlee/http";
 import { getDomain } from "tldts";
 import { KeyvKeyValueStore } from "./keyv-kvstore.js";
 import { CacheableField, CacheableOptions } from "./request.js";
@@ -12,11 +12,12 @@ export { KeyvKeyValueStore, CacheableField };
 export type { CacheableOptions };
 export { makeCacheable } from "./request.js";
 
-export function CacheableCrawlee(defaultOptions: CacheableOptions = {}): Pick<
-  HttpCrawlerOptions,
-  "preNavigationHooks" | "postNavigationHooks"
-> & {
-  install: <C extends HttpCrawler<any>>(crawler: C) => void;
+export function CacheableCrawlee<
+  Context extends InternalHttpCrawlingContext = InternalHttpCrawlingContext,
+>(
+  defaultOptions: CacheableOptions = {}
+): Pick<HttpCrawlerOptions<Context>, "preNavigationHooks" | "postNavigationHooks"> & {
+  install: (httpCrawlerBasedCrawler: unknown) => void;
 } {
   const config = {
     preNavigationHooks: [
@@ -32,7 +33,14 @@ export function CacheableCrawlee(defaultOptions: CacheableOptions = {}): Pick<
           new KeyvKeyValueStore({
             getKeyValueStore: getKeyValueStore.bind(null, options.storeName),
           });
+        const { publicOnly, cacheHeuristic, immutableMinTimeToLive, ignoreCargoCult } = options;
         gotOptions.cache = options.cache;
+        gotOptions.cacheOptions = {
+          shared: Boolean(publicOnly),
+          cacheHeuristic,
+          immutableMinTimeToLive,
+          ignoreCargoCult,
+        };
         request.headers = {
           "cache-control": options.cacheControl,
           ...request.headers,
