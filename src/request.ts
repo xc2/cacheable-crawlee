@@ -11,7 +11,7 @@ export interface CacheableOptions {
    */
   cache?: KeyvStoreAdapter;
   /**
-   * The cache control header to use, `max-age=3600` by default.
+   * The cache control header to use, `max-stale=3600` by default.
    * See [MDN](https://mdn.io/Cache-Control) for more information.
    */
   cacheControl?: string;
