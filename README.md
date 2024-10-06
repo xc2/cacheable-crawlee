@@ -1,6 +1,23 @@
 # cacheable-crawlee
 
-`cacheable-crawlee` is a Node.js package that provides caching capabilities for the [crawlee](https://crawlee.dev/)'s `HttpCrawler` based crawlers.  It allows you to cache HTTP responses to improve the efficiency and speed of your web crawling tasks.
+[![npm version](https://badge.fury.io/js/cacheable-crawlee.svg)](https://npmjs.com/package/cacheable-crawlee)
+
+## Why
+
+Using crawlee's default crawling flow, which only saves whether a task is complete and the processed data, comes with some pain points:
+
+1. If you need more details from a response, you have to re-crawl the same task even if the content hasn’t changed.
+2. When you add new tasks based on the responses of other tasks, you also have to re-crawl those for the same reason.
+
+HTTP requests are the most expensive part of web crawling, while other processes are usually inexpensive.
+
+Instead of completely skipping a task after it's done, we can cache the response. When re-running the crawler, we will process all tasks but only send requests for those that aren't cached.
+
+For more discussion, see [Why cacheable-crawlee?](https://tldr.ws/why-cacheable-crawlee)
+
+## What
+
+`cacheable-crawlee` is a Node.js package that provides caching capabilities for the [crawlee](https://crawlee.dev/)'s `HttpCrawler` based crawlers. It allows you to cache HTTP responses to improve the efficiency and speed of your web crawling tasks.
 
 The cache policy follows [RFC 7234](https://tools.ietf.org/html/rfc7234) and [RFC 5861](https://tools.ietf.org/html/rfc5861) standards, and is implemented by [http-cache-semantics](https://www.npmjs.com/package/http-cache-semantics).
 
