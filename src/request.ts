@@ -4,6 +4,10 @@ export interface CacheableOptions {
   storeName?: string;
   cache?: KeyvStoreAdapter;
   cacheControl?: string;
+  publicOnly?: boolean;
+  cacheHeuristic?: number;
+  immutableMinTimeToLive?: number;
+  ignoreCargoCult?: boolean;
 }
 
 export const CacheableField = "$$Cacheable$$";

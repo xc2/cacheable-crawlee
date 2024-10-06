@@ -32,7 +32,14 @@ export function CacheableCrawlee(defaultOptions: CacheableOptions = {}): Pick<
           new KeyvKeyValueStore({
             getKeyValueStore: getKeyValueStore.bind(null, options.storeName),
           });
+        const { publicOnly, cacheHeuristic, immutableMinTimeToLive, ignoreCargoCult } = options;
         gotOptions.cache = options.cache;
+        gotOptions.cacheOptions = {
+          shared: !publicOnly,
+          cacheHeuristic,
+          immutableMinTimeToLive,
+          ignoreCargoCult,
+        };
         request.headers = {
           "cache-control": options.cacheControl,
           ...request.headers,
