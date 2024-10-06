@@ -23,11 +23,11 @@ export function CacheableCrawlee<
     preNavigationHooks: [
       async ({ crawler, request, getKeyValueStore }, gotOptions) => {
         const options: CacheableOptions = {
+          cacheControl: "max-stale=3600",
           ...defaultOptions,
           ...request.userData[CacheableField],
         };
         options.storeName = options.storeName || "http-cache";
-        options.cacheControl = options.cacheControl ?? "max-age=3600";
         options.cache =
           options.cache ||
           new KeyvKeyValueStore({
@@ -41,10 +41,12 @@ export function CacheableCrawlee<
           immutableMinTimeToLive,
           ignoreCargoCult,
         };
-        request.headers = {
-          "cache-control": options.cacheControl,
-          ...request.headers,
-        };
+        if (options.cacheControl && !request.headers?.["cache-control"]) {
+          request.headers = {
+            "cache-control": options.cacheControl,
+            ...request.headers,
+          };
+        }
         const domain = getDomain(request.url) ?? "";
         const domainAccessedTime = (crawler as any).domainAccessedTime as Map<string, number>;
         Object.defineProperty(request, accessedState, {
