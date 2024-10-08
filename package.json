@@ -26,6 +26,7 @@
     "@crawlee/http": "^3.11.4",
     "@microsoft/api-extractor": "^7.47.9",
     "@rslib/core": "0.0.8",
+    "@sindresorhus/fnv1a": "^3.1.0",
     "@types/node": "^22.7.4",
     "keyv": "^5.0.3",
     "typescript": "^5.6.2"
@@ -51,7 +52,6 @@
   "author": "kfll",
   "description": "Add http cache support to crawlee's HttpCrawler based crawlers",
   "dependencies": {
-    "@sindresorhus/fnv1a": "^3.1.0",
     "tldts": "^6.1.48"
   }
 }

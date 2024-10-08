@@ -31,6 +31,13 @@ export default defineConfig({
       format: "esm",
       dts: false,
       autoExtension: false,
+      tools: {
+        rspack: {
+          output: {
+            chunkLoading: "import",
+          },
+        },
+      },
       output: {
         filename: {
           js: "[name].mjs",

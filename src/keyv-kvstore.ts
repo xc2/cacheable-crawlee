@@ -16,7 +16,9 @@ export class KeyvKeyValueStore extends EventEmitter implements KeyvStoreAdapter 
   static async generateKey(key: string): Promise<string> {
     let _key = key.replace(/[^a-zA-Z0-9!\-_.'()]/g, "").slice(0, 255);
     if (_key !== key) {
-      const { default: fnv1a } = await import("@sindresorhus/fnv1a");
+      const { default: fnv1a } = await import(
+        /* webpackChunkName: "vendor/_sindresorhus_fnv1a" */ "@sindresorhus/fnv1a"
+      );
       const keyHash = fnv1a(_key, { size: 32 }).toString(16);
       _key = `${_key.slice(0, 255 - keyHash.length)}.${keyHash}`;
     }
